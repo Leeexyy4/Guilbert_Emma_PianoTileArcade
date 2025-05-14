@@ -1,47 +1,40 @@
-class Bouton:
-    def __init__(self, label, x, y, width, height):
-        self._label = label
-        self._x = x
-        self._y = y
-        self._width = width
-        self._height = height
+import pygame
+from src.game.game import PageState
 
-    @property
-    def label(self):
-        return self._label
+class Button:
+    def __init__(self):
+        self.buttons = {
+            # Premier joueur
+            pygame.K_1: False,
+            pygame.K_2: False,
+            pygame.K_3: False,
+            pygame.K_4: False,
+            pygame.K_5: False,
+            pygame.K_6: False,  # Entrer
+            # Deuxième joueur
+            pygame.K_KP1: False,
+            pygame.K_KP2: False,
+            pygame.K_KP3: False,
+            pygame.K_KP4: False,
+            pygame.K_KP5: False,
+            pygame.K_KP6: False,  # Entrer
+        }
 
-    @label.setter
-    def label(self, value):
-        self._label = value
-
-    @property
-    def x(self):
-        return self._x
-
-    @x.setter
-    def x(self, value):
-        self._x = value
-
-    @property
-    def y(self):
-        return self._y
-
-    @y.setter
-    def y(self, value):
-        self._y = value
-
-    @property
-    def width(self):
-        return self._width
-
-    @width.setter
-    def width(self, value):
-        self._width = value
-
-    @property
-    def height(self):
-        return self._height
-
-    @height.setter
-    def height(self, value):
-        self._height = value
+    def update(self, event):
+        """Met à jour l'état des boutons (1 à 6)."""
+        if event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_UP, pygame.K_z):
+                print("Direction: Haut")
+                return (0, -1)
+            elif event.key in (pygame.K_DOWN, pygame.K_s):
+                print("Direction: Bas")
+                return (0, 1)
+            elif event.key in (pygame.K_LEFT, pygame.K_q):
+                print("Direction: Gauche")
+                return (-1, 0)
+            elif event.key in (pygame.K_RIGHT, pygame.K_d):
+                print("Direction: Droite")
+                return (1, 0)
+            if event.key in (pygame.K_KP6, pygame.K_6):
+                print("Touche 'Entrée' validée.")
+        return None

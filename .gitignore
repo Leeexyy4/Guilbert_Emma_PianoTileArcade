@@ -1,0 +1,16 @@
+# Fichiers de base de données
+ressources/database/database.db
+
+# Fichiers temporaires Python
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+
+# Fichiers compilés Python
+*.pyc
+*.pyo
+*.pyd
+
+# Éventuels fichiers de log ou temporaires
+*.log
+*.tmp
