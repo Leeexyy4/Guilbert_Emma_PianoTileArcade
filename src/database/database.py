@@ -61,7 +61,6 @@ class Database:
             INSERT OR IGNORE INTO music (title, artist, genre, release_date) VALUES
             ("Shape of You", "Ed Sheeran", "Pop", "2017-01-06"),
             ("Blinding Lights", "The Weekend", "Pop", "2019-11-29"),
-            ("Someone You Loved", "Lewis Capaldi", "Pop", "2018-11-08"),
             ("Sunflower", "Post Malone & Swae Lee", "Hip Hop", "2018-10-18"),
             ("Sweater Weather", "The Neighbourhood", "Alternative Rock", "2013-03-28"),
             ("Believer", "Imagine Dragons", "Rock", "2017-02-01")

@@ -58,6 +58,10 @@ class TableauManager:
         """Retourne la sélection pour la page donnée."""
         return self.__selections.get(page, None)
 
+    def setSelection(self, page, selection):
+        """Met à jour la sélection pour la page donnée."""
+        self.__selections[page] = selection
+
     def getTableau(self, page):
         """Retourne le tableau pour la page donnée."""
         return self.__tableaux.get(page, None)
@@ -75,38 +79,7 @@ class TableauManager:
         dx, dy = direction
         x, y = self.getPosition(page)
         tentative = (x + dx, y + dy)
-
-        selection_copy = dict(self.getSelection(page).getSelection(page))
-
-        positions_to_remove = [
-            pos for pos in selection_copy
-            if pos[1] == 0 or pos[1] == len(self.getInterface().getListeMusics()) + 1
-        ]
-
-        for pos in positions_to_remove:
-            selection_copy.pop(pos)
-
-        if tentative in self.getPositions(page):
-            if (direction == (0, 1) or direction == (0, -1) and tentative in selection_copy):
-                if (self.getSelection(page).getSelection(page)[tentative][2] > self.getInterface().getScreenHeight() - 200):
-                    self.getInterface().setScrollOffset(200)
-                    for pos, shape in selection_copy.items():
-                        if len(shape) == 6:
-                            forme, x, y, width, height, color = shape
-                            new_y = y - 200
-                            self.getSelection(page).getSelection(page)[pos] = (forme, x, new_y, width, height, color)
-                if (self.getSelection(page).getSelection(page)[tentative][2] < 200):
-                    self.getInterface().setScrollOffset(-200)
-                    for pos, shape in selection_copy.items():
-                        if len(shape) == 6:
-                            forme, x, y, width, height, color = shape
-                            new_y = y + 200
-                            self.getSelection(page).getSelection(page)[pos] = (forme, x, new_y, width, height, color)
-
-            self.__position[page] = list(tentative)
-            print(f"Position mise à jour : {self.getPosition(page)}")
-            return
-
+        
         # Si déplacement horizontal (gauche ou droite)
         if dy != 0 and dx == 0:
             nouvelle_col = y + dy
@@ -116,6 +89,16 @@ class TableauManager:
                 candidats.sort(key=lambda pos: abs(pos[0] - x))
                 self.__position[page] = list(candidats[0])
                 print(f"Position horizontale ajustée : {self.getPosition(page)}")
-                return
-
+        
+        # Si déplacement vertical (haut ou bas)
+        elif dx != 0 and dy == 0:
+            nouvelle_ligne = x + dx
+            candidats = [(i, j) for (i, j) in self.getPositions(page) if i == nouvelle_ligne]
+            if candidats:
+                # Trouver la colonne la plus proche de la position actuelle
+                candidats.sort(key=lambda pos: abs(pos[1] - y))
+                self.__position[page] = list(candidats[0])
+                print(f"Position verticale ajustée : {self.getPosition(page)}")
+        
+        self.getSelection(page).update_selection(page, direction, self.getPosition(page))
         print(f"Déplacement invalide depuis {self.getPosition(page)} vers {tentative}")

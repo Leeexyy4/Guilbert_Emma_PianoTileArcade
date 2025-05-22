@@ -1,5 +1,6 @@
 # Fichiers de base de données
 ressources/database/database.db
+.venv/
 
 # Fichiers temporaires Python
 __pycache__/

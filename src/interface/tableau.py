@@ -32,14 +32,20 @@ class Tableau:
             positions[(3, 0)] = "Aide"
 
         # Positions intermédiaires pour détails et jouer musiques (index dynamique)
-        index = (0, 1)
+        index = (0, 0)
         for music in self.getInterface().getListeMusics():
+            index = (index[0], index[1] + 1)
+            # Ajouter une sélection pour chaque musique à une position valide
             if index in positions_valides:
-                positions[index] = f"Détails musique {music}"
+                positions.update({
+                    index: (f"Détail musique {music}"),
+                })
             index = (index[0] + 1, index[1])
             if index in positions_valides:
-                positions[index] = f"Play musique {music}"
-            index = (index[0] + 1, index[1])
+                positions.update({
+                    index: (f"Play musique {music}"),
+                })
+            index = (0, index[1])
 
         # 4 dernières positions pour actions fixes
         positions.update({

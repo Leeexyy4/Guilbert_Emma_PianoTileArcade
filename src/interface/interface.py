@@ -69,6 +69,10 @@ class Interface:
         """Retourne le décalage de défilement."""
         return self.__scroll_offset
     
+    def getAreaMusique(self):
+        """Retourne la zone de musique."""
+        return pygame.Rect(50, 200, self.getScreenWidth() - 100, self.getScreenHeight() - 350)
+    
     def getScreenWidth(self):
         """Retourne la largeur de l'écran."""
         return self.__screen_w
@@ -85,11 +89,12 @@ class Interface:
 
     def setScrollOffset(self, offset):
         """ Met à jour le décalage de défilement sans sortir de la zone visible. """
-        carte_hauteur = 210
-        visible_zone = self.getScreenHeight() - 350
-        total_hauteur = len(self.getListeMusics()) * carte_hauteur
-        max_scroll = max(0, total_hauteur - visible_zone)
-        self.__scroll_offset = max(0, min(self.__scroll_offset + offset, max_scroll))
+        self.__scroll_offset = self.__scroll_offset + offset
+        # Limiter le décalage pour rester dans la zone visible
+        if self.__scroll_offset < 0:
+            self.__scroll_offset = 0
+        elif self.__scroll_offset > self.getAreaMusique().height:
+            self.__scroll_offset = self.getAreaMusique().height
 
 
 # ----------------------------------- Affichage des élements ----------------------------------- #
@@ -145,17 +150,16 @@ class Interface:
     def affichageListeMusique(self):
         """Affiche une liste défilante de musiques dans une zone scrollable."""
 
-        scroll_area = pygame.Rect(50, 200, self.getScreenWidth() - 100, self.getScreenHeight() - 350)
-        surface = pygame.Surface((scroll_area.width, scroll_area.height))
+        surface = pygame.Surface((self.getAreaMusique().width, self.getAreaMusique().height))
         surface.fill(self.getCouleur().getBleu())
                             
         for index, music in enumerate(self.getListeMusics()):
             top_y = index * 210 - self.getScrollOffset()
-            if top_y + 200 < 0 or top_y > scroll_area.height:
+            if top_y + 200 < 0 or top_y > self.getAreaMusique().height:
                 continue  # hors de la zone visible
 
             # Rectangle global
-            rect = pygame.Rect(0, top_y, scroll_area.width, 200)
+            rect = pygame.Rect(0, top_y, self.getAreaMusique().width, 200)
             pygame.draw.rect(surface, self.getCouleur().getRose(), rect, border_radius=30)
 
             # Couverture
@@ -183,7 +187,7 @@ class Interface:
             pygame.draw.rect(surface, self.getCouleur().getBleu(), rect_play, border_radius=30)
             surface.blit(self.getPoliceP().render("Play", True, self.getCouleur().getRose()), self.getPoliceP().render("Play", True, self.getCouleur().getRose()).get_rect(center=rect_play.center))
 
-        self.getFenetre().blit(surface, scroll_area.topleft, area=pygame.Rect(0, 0, scroll_area.width, scroll_area.height))
+        self.getFenetre().blit(surface, self.getAreaMusique().topleft, area=pygame.Rect(0, 0, self.getAreaMusique().width, self.getAreaMusique().height))
 
 
     def affichageSelection(self, page):
