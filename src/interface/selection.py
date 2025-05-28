@@ -47,10 +47,10 @@ class Selection:
 
         # Ajouter les sélections pour les positions en bas de l'écran
         selections.update({
-            (0, index[1] + 1): ("rectangle", 0, self.getInterface().getScreenHeight() - 100, self.getInterface().getScreenWidth() / 4, 100, self.getInterface().getCouleur().getNoir()),  # Rectangle
-            (1, index[1] + 1): ("rectangle", self.getInterface().getScreenWidth() / 4, self.getInterface().getScreenHeight() - 100, self.getInterface().getScreenWidth() / 4, 100, self.getInterface().getCouleur().getNoir()),  # Rectangle
-            (2, index[1] + 1): ("rectangle", self.getInterface().getScreenWidth() / 2, self.getInterface().getScreenHeight() - 100, self.getInterface().getScreenWidth() / 4, 100, self.getInterface().getCouleur().getNoir()),  # Rectangle
-            (3, index[1] + 1): ("rectangle", self.getInterface().getScreenWidth() * 3 / 4, self.getInterface().getScreenHeight() - 100, self.getInterface().getScreenWidth() / 4, 100, self.getInterface().getCouleur().getNoir()),  # Rectangle
+            (0, index[1] + 1): ("rectangle", 0, self.getInterface().getScreenHeight() - 150, self.getInterface().getScreenWidth() / 4, 150, self.getInterface().getCouleur().getNoir()),  # Rectangle
+            (1, index[1] + 1): ("rectangle", self.getInterface().getScreenWidth() / 4, self.getInterface().getScreenHeight() - 150, self.getInterface().getScreenWidth() / 4, 150, self.getInterface().getCouleur().getNoir()),  # Rectangle
+            (2, index[1] + 1): ("rectangle", self.getInterface().getScreenWidth() / 2, self.getInterface().getScreenHeight() - 150, self.getInterface().getScreenWidth() / 4, 150, self.getInterface().getCouleur().getNoir()),  # Rectangle
+            (3, index[1] + 1): ("rectangle", self.getInterface().getScreenWidth() * 3 / 4, self.getInterface().getScreenHeight() - 150, self.getInterface().getScreenWidth() / 4, 150, self.getInterface().getCouleur().getNoir()),  # Rectangle
         })
 
         return selections
@@ -129,14 +129,14 @@ class Selection:
                     if forme[0] == "rectangle":
                         y = forme[2]
                         if (self.getInterface().getScrollOffset() // 210 >= 0):
-                            y -= 210
+                            y -= 200
                         else:
                             y -= self.getInterface().getScrollOffset()
                         selection_dict[pos] = ("rectangle", forme[1], y, forme[3], forme[4], forme[5])
-                if (self.getInterface().getScrollOffset() // 210 < 0):
+                if (self.getInterface().getScrollOffset() // 200 < 0):
                     self.getInterface().setScrollOffset(self.getInterface().getScrollOffset())
                 else:
-                    self.getInterface().setScrollOffset(210)
+                    self.getInterface().setScrollOffset(200)
         
         if scroll_down or scroll_up:
             self.getInterface().getTableauManager().setSelection(page, Selection(self.getInterface(), selection_dict))

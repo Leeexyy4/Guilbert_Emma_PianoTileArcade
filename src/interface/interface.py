@@ -71,7 +71,7 @@ class Interface:
     
     def getAreaMusique(self):
         """Retourne la zone de musique."""
-        return pygame.Rect(50, 200, self.getScreenWidth() - 100, self.getScreenHeight() - 350)
+        return pygame.Rect(50, 200, self.getScreenWidth() - 100, self.getScreenHeight() - 375)
     
     def getScreenWidth(self):
         """Retourne la largeur de l'écran."""
@@ -113,46 +113,46 @@ class Interface:
             La fonction affichageMenu permet d'afficher le menu du jeu
         """
         # Cercle de l'image de profil
-        pygame.draw.circle(self.getFenetre(), self.getCouleur().getRose(), (100, 100), 80)
-        pygame.draw.circle(self.getFenetre(), self.getCouleur().getBleu(), (100, 100), 75)
-        pygame.draw.circle(self.getFenetre(), self.getCouleur().getRose(), (100, 100), 70)
+        pygame.draw.circle(self.getFenetre(), self.getCouleur().getViolet(), (100, 100), 80)
+        pygame.draw.circle(self.getFenetre(), self.getCouleur().getRose(), (100, 100), 75)
+        pygame.draw.circle(self.getFenetre(), self.getCouleur().getViolet(), (100, 100), 70)
         
         # Cercle de l'icone d'aide
-        pygame.draw.circle(self.getFenetre(), self.getCouleur().getRose(), (self.getScreenWidth() - 120, 100), 45)
-        pygame.draw.circle(self.getFenetre(), self.getCouleur().getBleu(), (self.getScreenWidth() - 120, 100), 40)
-        pygame.draw.circle(self.getFenetre(), self.getCouleur().getRose(), (self.getScreenWidth() - 120, 100), 35)
+        pygame.draw.circle(self.getFenetre(), self.getCouleur().getViolet(), (self.getScreenWidth() - 120, 100), 45)
+        pygame.draw.circle(self.getFenetre(), self.getCouleur().getRose(), (self.getScreenWidth() - 120, 100), 40)
+        pygame.draw.circle(self.getFenetre(), self.getCouleur().getViolet(), (self.getScreenWidth() - 120, 100), 35)
 
         # Rectangle des filtres et tries
-        rect = pygame.draw.rect(self.getFenetre(), self.getCouleur().getRose(), pygame.Rect((self.getScreenWidth() - 550) // 2, 80, 250, 50), border_radius=30)
-        filter_trier = self.getPoliceP().render("Trier", True, self.getCouleur().getNoir())
+        rect = pygame.draw.rect(self.getFenetre(), self.getCouleur().getViolet(), pygame.Rect((self.getScreenWidth() - 550) // 2, 80, 250, 50), border_radius=30)
+        filter_trier = self.getPoliceP().render("Trier", True, self.getCouleur().getBlanc())
         self.getFenetre().blit(filter_trier, filter_trier.get_rect(center=rect.center))
         
-        rect = pygame.draw.rect(self.getFenetre(), self.getCouleur().getRose(), pygame.Rect((self.getScreenWidth() + 100) // 2, 80, 250, 50), border_radius=30)
-        filter_filtres = self.getPoliceP().render("Filtrer", True, self.getCouleur().getNoir())
+        rect = pygame.draw.rect(self.getFenetre(), self.getCouleur().getViolet(), pygame.Rect((self.getScreenWidth() + 100) // 2, 80, 250, 50), border_radius=30)
+        filter_filtres = self.getPoliceP().render("Filtrer", True, self.getCouleur().getBlanc())
         self.getFenetre().blit(filter_filtres, filter_filtres.get_rect(center=rect.center))
 
-        rect_bouton = pygame.Rect(0, self.getScreenWidth() - 100, self.getScreenWidth(), 100)
-        pygame.draw.rect(self.getFenetre(), self.getCouleur().getRose(), rect_bouton)
+        rect_bouton = pygame.Rect(0, self.getScreenHeight() - 150, self.getScreenWidth(), 150)
+        pygame.draw.rect(self.getFenetre(), self.getCouleur().getViolet(), rect_bouton)
 
         # Textes des boutons
         texts = ["Accueil", "Multijoueur", "Statistiques", "Quitter"]
         for i, text in enumerate(texts):
             x_center = pygame.display.Info().current_w * (i + 0.5) / 4
-            text_surface = self.getPoliceG().render(text, True, self.getCouleur().getNoir())
-            text_rect = text_surface.get_rect(center=(x_center, self.getScreenHeight() - 50))
+            text_surface = self.getPoliceG().render(text, True, self.getCouleur().getBlanc())
+            text_rect = text_surface.get_rect(center=(x_center, self.getScreenHeight() - 75))
             self.getFenetre().blit(text_surface, text_rect)
 
         # Séparateurs verticaux
-        pygame.draw.line(self.getFenetre(), self.getCouleur().getBleu(), (self.getScreenWidth() / 4, self.getScreenHeight() - 100), (self.getScreenWidth() / 4, self.getScreenHeight()), 5)
-        pygame.draw.line(self.getFenetre(), self.getCouleur().getBleu(), (self.getScreenWidth() / 2, self.getScreenHeight() - 100), (self.getScreenWidth() / 2, self.getScreenHeight()), 5)
-        pygame.draw.line(self.getFenetre(), self.getCouleur().getBleu(), (self.getScreenWidth() * 3 / 4, self.getScreenHeight() - 100), (self.getScreenWidth() * 3 / 4, self.getScreenHeight()), 5)
+        pygame.draw.line(self.getFenetre(), self.getCouleur().getRose(), (self.getScreenWidth() / 4, self.getScreenHeight() - 150), (self.getScreenWidth() / 4, self.getScreenHeight()), 5)
+        pygame.draw.line(self.getFenetre(), self.getCouleur().getRose(), (self.getScreenWidth() / 2, self.getScreenHeight() - 150), (self.getScreenWidth() / 2, self.getScreenHeight()), 5)
+        pygame.draw.line(self.getFenetre(), self.getCouleur().getRose(), (self.getScreenWidth() * 3 / 4, self.getScreenHeight() - 150), (self.getScreenWidth() * 3 / 4, self.getScreenHeight()), 5)
 
     def affichageListeMusique(self):
         """Affiche une liste défilante de musiques dans une zone scrollable."""
 
         surface = pygame.Surface((self.getAreaMusique().width, self.getAreaMusique().height))
-        surface.fill(self.getCouleur().getBleu())
-                            
+        surface.fill(self.getCouleur().getBlanc())
+        
         for index, music in enumerate(self.getListeMusics()):
             top_y = index * 210 - self.getScrollOffset()
             if top_y + 200 < 0 or top_y > self.getAreaMusique().height:
@@ -167,25 +167,25 @@ class Interface:
             surface.blit(getattr(Image.Cover, cover), getattr(Image.Cover, cover).get_rect(left=rect.left, centery=rect.centery))
 
             # Titre
-            title = self.getPoliceP().render(f"{music[1]} - {music[2]}", True, self.getCouleur().getNoir())
+            title = self.getPoliceP().render(f"{music[1]} - {music[2]}", True, self.getCouleur().getBlanc())
             surface.blit(title, title.get_rect(left=rect.left + 250, centery=rect.top + 60))
 
             # Bouton Détails
             rect_bouton = pygame.Rect(rect.left + 250, rect.top + 135, 200, 50)
-            pygame.draw.rect(surface, self.getCouleur().getBleu(), rect_bouton, border_radius=30)
-            detail_button_text = self.getPoliceP().render("Détails", True, self.getCouleur().getRose())
+            pygame.draw.rect(surface, self.getCouleur().getViolet(), rect_bouton, border_radius=30)
+            detail_button_text = self.getPoliceP().render("Détails", True, self.getCouleur().getBlanc())
             surface.blit(detail_button_text, detail_button_text.get_rect(center=rect_bouton.center))
 
             # Difficulté
-            pygame.draw.polygon(surface, self.getCouleur().getBleu(), [(rect.right - 210, rect.top), (rect.right - 250, rect.top), (rect.right - 210, rect.top + 49)])
+            pygame.draw.polygon(surface, self.getCouleur().getViolet(), [(rect.right - 210, rect.top), (rect.right - 250, rect.top), (rect.right - 210, rect.top + 49)])
             rect_diff = pygame.Rect(rect.right - 210, rect.top, 210, 50)
-            pygame.draw.rect(surface, self.getCouleur().getBleu(), rect_diff)
-            surface.blit(self.getPoliceP().render("Difficulté", True, self.getCouleur().getRose()), self.getPoliceP().render("Difficulté", True, self.getCouleur().getRose()).get_rect(center=rect_diff.center))
+            pygame.draw.rect(surface, self.getCouleur().getViolet(), rect_diff)
+            surface.blit(self.getPoliceP().render("Difficulté", True, self.getCouleur().getBlanc()), self.getPoliceP().render("Difficulté", True, self.getCouleur().getRose()).get_rect(center=rect_diff.center))
 
             # Bouton Play
             rect_play = pygame.Rect(rect.right - 210, rect.top + 70, 200, 115)
-            pygame.draw.rect(surface, self.getCouleur().getBleu(), rect_play, border_radius=30)
-            surface.blit(self.getPoliceP().render("Play", True, self.getCouleur().getRose()), self.getPoliceP().render("Play", True, self.getCouleur().getRose()).get_rect(center=rect_play.center))
+            pygame.draw.rect(surface, self.getCouleur().getViolet(), rect_play, border_radius=30)
+            surface.blit(self.getPoliceP().render("Play", True, self.getCouleur().getBlanc()), self.getPoliceP().render("Play", True, self.getCouleur().getRose()).get_rect(center=rect_play.center))
 
         self.getFenetre().blit(surface, self.getAreaMusique().topleft, area=pygame.Rect(0, 0, self.getAreaMusique().width, self.getAreaMusique().height))
 
