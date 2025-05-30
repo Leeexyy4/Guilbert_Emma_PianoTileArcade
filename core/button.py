@@ -1,9 +1,8 @@
 import pygame
-from src.game.game import PageState
 
 class Button:
     def __init__(self):
-        self.buttons = {
+        self.__buttons = {
             # Premier joueur
             pygame.K_1: False,
             pygame.K_2: False,
@@ -24,17 +23,13 @@ class Button:
         """Met à jour l'état des boutons (1 à 6)."""
         if event.type == pygame.KEYDOWN:
             if event.key in (pygame.K_UP, pygame.K_z):
-                print("Direction: Haut")
                 return (0, -1)
             elif event.key in (pygame.K_DOWN, pygame.K_s):
-                print("Direction: Bas")
                 return (0, 1)
             elif event.key in (pygame.K_LEFT, pygame.K_q):
-                print("Direction: Gauche")
                 return (-1, 0)
             elif event.key in (pygame.K_RIGHT, pygame.K_d):
-                print("Direction: Droite")
                 return (1, 0)
             if event.key in (pygame.K_KP6, pygame.K_6):
-                print("Touche 'Entrée' validée.")
+                return "enter"
         return None

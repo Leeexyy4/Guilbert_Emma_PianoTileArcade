@@ -16,4 +16,4 @@ pip install pygame --break-system-packages || { echo "❌ Installation de pygame
 pip show pygame > /dev/null 2>&1 || pip install pygame --break-system-packages
 
 # Lance ton script avec le bon interpréteur
-python main.py
+python Game.py

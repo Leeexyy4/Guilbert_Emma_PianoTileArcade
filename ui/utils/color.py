@@ -1,8 +1,8 @@
 class Color:
-    """La classe Couleur est une classe qui permet de recuperer la couleur voulue grâce au getter."""
+    """La classe Color est une classe qui permet de recuperer la color voulue grâce au getter."""
     
     def __init__(self) -> None:
-        """Initialisation des couleurs."""
+        """Initialisation des colors."""
         self.__BLANC = (255, 255, 255)
         self.__VIOLET = (238, 169, 239)
         self.__ROSE = (245, 203, 246)
@@ -10,21 +10,21 @@ class Color:
         self.__NOIR = (0, 0, 0)
 
     def getBlanc(self):
-        """Getter de la couleur Blanche."""
+        """Getter de la color Blanche."""
         return self.__BLANC
 
     def getBleu(self):
-        """Getter de la couleur Bleu."""
+        """Getter de la color Bleu."""
         return self.__BLEU
 
     def getViolet(self):
-        """Getter de la couleur Violet."""
+        """Getter de la color Violet."""
         return self.__VIOLET
 
     def getRose(self):
-        """Getter de la couleur Rose."""
+        """Getter de la color Rose."""
         return self.__ROSE
 
     def getNoir(self):
-        """Getter de la couleur Noir."""
+        """Getter de la color Noir."""
         return self.__NOIR
