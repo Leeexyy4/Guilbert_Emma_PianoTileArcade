@@ -1,9 +1,5 @@
 # GUILBERT Emma
 
-
-# ----------------------- Jeu de plateau - Bibliotheques  ------------------------ #
-
-# Bibliotheques utilisees pour le code
 import pygame, sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.pageState import PageState
@@ -11,14 +7,13 @@ from ui.interface import Interface
 from core.logic import Logic
 from data.database import Database
 
-# ----------------------- Jeu de plateau - Logic du jeu ------------------------ #
 class Game:
     def __init__(self):
         self.__database: Database = Database()
         self.__interface: Interface = Interface(self)
         self.__logic: Logic = Logic(self)
 
-# ----------------------------------- Getter des élements ----------------------------------- #
+# ----------------------------------- Getter ----------------------------------- #
 
     def getDatabase(self):
         """Getter de la base de données."""
@@ -32,7 +27,7 @@ class Game:
         """Getter de la logique."""
         return self.__logic
 
-# ----------------------------------- Image.Page du jeu ----------------------------------- #
+# ----------------------------------- Setter ----------------------------------- #
 
     def PageProfil(self):
         if (self.getInterface().getUpdate()):
@@ -95,7 +90,6 @@ class Game:
         self.getLogic().actionPageFinPerdu()
 
 if __name__ == "__main__":
-    # Initialisation du jeu
     pygame.init()
     
     pygame.mixer.music.load("./assets/music/Musique_jeu.mp3")

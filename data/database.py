@@ -89,7 +89,7 @@ class Database:
         self.insert_tables()
         print("Base de données initialisée.")
 
-    # ----------------------------------- Getter des élements ----------------------------------- #
+    # ----------------------------------- Getter  ----------------------------------- #
 
     def getMusic(self):
         """Getter de la musique."""
@@ -111,7 +111,7 @@ class Database:
         self.__cursor.execute("SELECT * FROM playlists")
         return self.__cursor.fetchall()
 
-    # ----------------------------------- Setter des élements ----------------------------------- #
+    # ----------------------------------- Setter ----------------------------------- #
 
     def setMusic(self, title, artist, genre, release_date):
         """Setter de la musique."""
@@ -133,7 +133,7 @@ class Database:
         self.__cursor.execute("INSERT INTO playlists (name, description) VALUES (?, ?)", (name, description))
         self.__conn.commit()
 
-    # ----------------------------------- Add des élements ----------------------------------- #
+    # ----------------------------------- Add ----------------------------------- #
 
     def addMusic(self, title, artist, genre, release_date):
         """Ajoute une musique à la base de données."""
@@ -155,7 +155,7 @@ class Database:
         self.setPlaylists(name, description)
         print(f"Playlist '{name}' ajoutée à la base de données.")
 
-    # ----------------------------------- Edit des élements ----------------------------------- #
+    # ----------------------------------- Edit ----------------------------------- #
 
     def editMusic(self, music_id, title=None, artist=None, genre=None, release_date=None):
         """Modifie une musique dans la base de données."""
@@ -199,7 +199,7 @@ class Database:
         self.__conn.commit()
         print(f"Playlist avec ID {playlist_id} modifiée.")
 
-    # ----------------------------------- Delete des élements ----------------------------------- #
+    # ----------------------------------- Delete ----------------------------------- #
 
     def deleteMusic(self, music_id):
         """Supprime une musique de la base de données."""

@@ -72,7 +72,7 @@ class MenuView:
             surface_finale = pygame.Surface((w, h), pygame.SRCALPHA)
             surface_finale.blit(blurry, (0, 0))
 
-            # Optionnel : Ajouter un voile semi-transparent violet
+            # Ajouter un voile semi-transparent violet
             voile = pygame.Surface((w, h), pygame.SRCALPHA)
             voile.fill((150, 100, 200, 100))  # (R, G, B, alpha)
             surface_finale.blit(voile, (0, 0))

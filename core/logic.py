@@ -1,12 +1,8 @@
-#  ----------------------- Jeu de plateau - Interface ------------------------ #
-
-# Bibliothèques utilisées pour le code
 import pygame
 from ui.utils.color import Color
 from core.pageState import PageState
 from core.button import Button
 
-# ----------------------- Jeu de plateau - Logic ------------------------ #
 class Logic:
     def __init__(self, game) -> None:
         """Initialisation de l'interface."""
@@ -36,8 +32,6 @@ class Logic:
         """Getter du bouton."""
         return self.__button
     
-# ----------------------------------- Affichage des élements ----------------------------------- #
-
     def actionPageProfil(self):
         self.getInterface().setUpdate(False)
         for event in pygame.event.get():
@@ -51,7 +45,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)              
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -68,7 +62,7 @@ class Logic:
                 else:              
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)                
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -85,7 +79,7 @@ class Logic:
                 else:              
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)              
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -102,7 +96,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
                 
@@ -119,7 +113,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -136,7 +130,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -182,7 +176,7 @@ class Logic:
                 else:
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
     
@@ -199,7 +193,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)            
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
     
@@ -216,7 +210,7 @@ class Logic:
                 else:             
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)               
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -233,7 +227,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)              
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -250,7 +244,7 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
@@ -267,6 +261,6 @@ class Logic:
                 else:            
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
                     self.getInterface().setUpdate(True)
-            if event.type == pygame.QUIT:  # Quitter
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()

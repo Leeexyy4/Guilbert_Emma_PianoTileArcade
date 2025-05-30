@@ -1,6 +1,3 @@
-# ----------------------- Jeu de plateau - Interface ------------------------ #
-
-# Bibliothèques utilisées pour le code
 import random, pygame
 from core.pageState import PageState
 from ui.manager.windowManager import WindowManager
@@ -15,7 +12,7 @@ class Interface:
         self.__pagePrecedente: PageState = PageState.ACCUEIL
         self.__windowManager: WindowManager = WindowManager(self)
     
-# ----------------------------------- Retournes élements ----------------------------------- #
+# ----------------------------------- Getter ----------------------------------- #
     
     def getGame(self):
         """Game du jeu."""
@@ -52,7 +49,7 @@ class Interface:
         """ Met à jour l'interface'. """
         self.__update = update
 
-# ----------------------------------- Affichage des élements des pages ----------------------------------- #
+# ----------------------------------- Affichage ----------------------------------- #
 
     def affichagePageProfil(self):
         self.getWindowManager().getBackground().affichageFondEcran(Image.Page.PROFIL)

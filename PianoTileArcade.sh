@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Crée le virtualenv si besoin
+# Crée le virtualenv
 if [ ! -d ".venv" ]; then
     echo "🔧 Création de l'environnement virtuel..."
     python3.12 -m venv .venv || { echo "❌ Échec du venv"; exit 1; }
