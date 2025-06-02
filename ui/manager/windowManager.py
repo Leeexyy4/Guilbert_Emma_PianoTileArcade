@@ -62,7 +62,7 @@ class WindowManager:
     
     def getSorted(self):
         return self.__sorted
-
+    
     def getAreaMusic(self):
         """Retourne la selection active pour une page."""
         return self.__areaMusic

@@ -4,8 +4,8 @@ class Note:
     def __init__(self, gameview, position, timestamp):
         self.__gameview = gameview
         self.__timestamp = timestamp 
-        self.__width = gameview.getPlayWidth() / 4
-        self.__height = gameview.getPlayHeight() / 6
+        self.__width = (gameview.getPlayWidth() // 2 + 100) / 4
+        self.__height = (gameview.getPlayHeight() // 2 + 100)  / 4
         self.__column = ["left", "middle", "right", "top"].index(position)
         self.__x = self.__column * self.__width
         self.__y = -self.__height

@@ -1,18 +1,7 @@
 import pygame
 from ui.page.basePage import BasePage
-from ui.utils.inputBox import InputBox
 
 class InscriptionPage(BasePage):
-    def __init__(self, windowManager):
-        super().__init__(windowManager)
-        font = self._windowManager.getFontSmall()
-        color = self._windowManager.getColor()
-        self.input_username = InputBox(0, 0, 280, 50, font, color.getGris(), color.getViolet())
-        self.input_password = InputBox(0, 0, 280, 50, font, color.getGris(), color.getViolet())
-        self.input_confirm = InputBox(0, 0, 280, 50, font, color.getGris(), color.getViolet())
-        self.button_inscrire = pygame.Rect(0, 0, 280, 60)
-        self.erreur_inscription = ""  # 🔴 Chaîne vide = pas d'erreur
-
     def affichagePage(self):
         window = self._windowManager.getWindow()
         font = self._windowManager.getFontSmall()

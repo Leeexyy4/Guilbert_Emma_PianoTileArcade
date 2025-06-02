@@ -36,7 +36,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:    
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -111,15 +110,12 @@ class Logic:
                         users = db.getPlayers()
 
                         if any(u[1] == username for u in users):
-                            print("Nom déjà pris.")
                             page.erreur_inscription = "Nom déjà utilisé."
                         elif password != confirm:
-                            print("Les mots de passe ne correspondent pas.")
                             page.erreur_inscription = "Les mots de passe ne correspondent pas."
                         else:
-                            db._Database__cursor.execute("INSERT INTO players (name, password) VALUES (?, ?)", (username, password))
+                            db._Database__cursor.execute("INSERT OR IGNORE INTO players (name, password) VALUES (?, ?)", (username, password))
                             db._Database__conn.commit()
-                            print(f"Inscription réussie : {username}")
                             page.erreur_inscription = ""
                             self.getInterface().setPage(PageState.CONNEXION)
 
@@ -193,8 +189,6 @@ class Logic:
                     selection = self.getInterface().getWindowManager().getSelection()
                     current_item = selection.getSelection()[1][selection.getPosition()][0]
 
-                    print(current_item)
-
                     if current_item == "Retour":
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
 
@@ -208,7 +202,6 @@ class Logic:
                         matched_user = next((u for u in users if u[1] == username and u[2] == password), None)
 
                         if matched_user:
-                            print(f"Connexion réussie : {username}")
                             page.erreur_connexion = False
 
                             player_id, name, password = matched_user
@@ -217,7 +210,6 @@ class Logic:
                             self.getInterface().getWindowManager().setCurrentUser(player_obj)
                             self.getInterface().setPage(PageState.ACCUEIL)
                         else:
-                            print("Échec de la connexion : identifiants invalides.")
                             page.erreur_connexion = True
                         self.getInterface().setUpdate(True)
 
@@ -254,7 +246,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -292,7 +283,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -324,7 +314,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -357,8 +346,6 @@ class Logic:
             if direction == "enter":
                 selection = self.getInterface().getWindowManager().getSelection()
                 item = selection.getSelection()[1][selection.getPosition()][0]
-                print(item)
-
                 if item == "Retour":
                     self.getInterface().setPage(self.getInterface().getPagePrecedente())
                     self.getInterface().setUpdate(True)
@@ -418,7 +405,6 @@ class Logic:
 
                             if game_view.isGameOver():
                                 pygame.mixer.music.stop()
-                                print("Game Over : note manquée !")
                                 running = False
                                 self.getInterface().setUpdate(True)
 
@@ -439,7 +425,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Profil"):
                         self.getInterface().setPage(PageState.PROFIL)
                         self.getInterface().setUpdate(True)
@@ -457,7 +442,7 @@ class Logic:
                         self.getInterface().setPage(PageState.DETAIL)
                         self.getInterface().setUpdate(True)
                     elif "Play " in self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0]:
-                        self.getInterface().getWindowManager().setMusicSelect(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0].replace("Detail musique ", ""))
+                        self.getInterface().getWindowManager().setMusicSelect(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0].replace("Play musique ", ""))
                         self.getInterface().setPage(PageState.PLAY)
                         self.getInterface().setUpdate(True)
                     elif (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Multijoueur"):
@@ -483,7 +468,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:    
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -512,7 +496,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -544,7 +527,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:  
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Non"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -578,7 +560,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)
@@ -610,7 +591,6 @@ class Logic:
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
-                    print(self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0])
                     if (self.getInterface().getWindowManager().getSelection().getSelection()[1][self.getInterface().getWindowManager().getSelection().getPosition()][0] == "Retour"):
                         self.getInterface().setPage(self.getInterface().getPagePrecedente())
                         self.getInterface().setUpdate(True)

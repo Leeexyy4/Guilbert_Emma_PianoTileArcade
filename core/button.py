@@ -33,18 +33,18 @@ class Button:
         elif event.key in (pygame.K_RIGHT, pygame.K_d):
             return (1, 0)
 
-        if event.key == pygame.K_h:
+        if event.key in (pygame.K_KP_6, pygame.K_6):
             return "enter"
-        if event.key == pygame.K_r:
-            return 0  # left
-        if event.key == pygame.K_t:
-            return 1  # middle
-        if event.key == pygame.K_y:
-            return 2  # right
-        if event.key == pygame.K_f:
-            return 3  # top
-        if event.key == pygame.K_g:
-            return 4  # (au cas où tu ajoutes une 5e colonne)
+        if event.key in (pygame.K_KP_1, pygame.K_1):
+            return 0
+        if event.key in (pygame.K_KP_2, pygame.K_2):
+            return 1
+        if event.key in (pygame.K_KP_3, pygame.K_3):
+            return 2
+        if event.key in (pygame.K_KP_4, pygame.K_4):
+            return 3
+        if event.key in (pygame.K_KP_5, pygame.K_5):
+            return 4
 
         return None
 

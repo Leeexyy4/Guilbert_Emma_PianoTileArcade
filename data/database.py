@@ -4,8 +4,6 @@ import datetime
 
 class Database:
     def __init__(self, db_path="data/database.db"):
-        if os.path.exists("data/database.db"):
-            os.remove("data/database.db")
         self.__db_path = db_path
         if os.path.dirname(db_path):
             os.makedirs(os.path.dirname(db_path), exist_ok=True)
@@ -59,29 +57,26 @@ class Database:
 
     def insert_tables(self):
         self.__cursor.execute("""
-            INSERT OR IGNORE INTO music (title, artist, genre, release_date, difficulte) VALUES
-            ("Shape of You", "Ed Sheeran", "Pop", "2017-01-06", "Easy"),
+            INSERT OR REPLACE INTO music (title, artist, genre, release_date, difficulte) VALUES
             ("Sunflower", "Post Malone & Swae Lee", "Hip Hop", "2018-10-18", "Hard"),
             ("Sweater Weather", "The Neighbourhood", "Alternative Rock", "2013-03-28", "Medium"),
-            ("Believer", "Imagine Dragons", "Rock", "2017-02-01", "Easy")
+            ("Believer", "Imagine Dragons", "Rock", "2017-02-01", "Easy"),
+            ("Blinding Lights", "The Weekend", "Synthwave", "2019-11-29", "Medium")
         """)
 
         self.__cursor.execute("""
-            INSERT OR IGNORE INTO players (name, password) VALUES
-            ('admin', '123'),
-            ('alice', 'alice'),
-            ('bob', 'bob')
+            INSERT OR REPLACE INTO players (name, password) VALUES
+            ('Invité', 'invite'),
+            ('Emma', 'admin123')
         """)
 
         # Ajout de scores pour des joueurs et musiques
         self.__cursor.execute("""
             INSERT OR IGNORE INTO scores (player_name, music_id, score) VALUES
-            ('admin', 1, 100),
-            ('admin', 2, 150),
-            ('alice', 1, 200),
-            ('bob', 3, 180),
-            ('bob', 4, 120),
-            ('bob', 1, 120)
+            ('Invité', 1, 0),
+            ('Invité', 2, 0),
+            ('Invité', 3, 0),
+            ('Invité', 4, 0)
         """)
 
         self.__conn.commit()
@@ -91,7 +86,6 @@ class Database:
         """Initialise la base de donnees."""
         self.create_tables()
         self.insert_tables()
-        print("Base de donnees initialisee.")
 
     # ----------------------------------- Getter ----------------------------------- #
 
@@ -217,7 +211,7 @@ class Database:
     def setMusic(self, title, artist, genre, release_date, difficulte):
         """Setter de la musique."""
         self.__cursor.execute(
-            "INSERT INTO music (title, artist, genre, release_date, difficulte) VALUES (?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO music (title, artist, genre, release_date, difficulte) VALUES (?, ?, ?, ?, ?)",
             (title, artist, genre, release_date, difficulte)
         )
         self.__conn.commit()
@@ -225,14 +219,14 @@ class Database:
     def setScores(self, player_name, music_id, score):
         """Setter des scores."""
         self.__cursor.execute(
-            "INSERT INTO scores (player_name, music_id, score) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO scores (player_name, music_id, score) VALUES (?, ?, ?)",
             (player_name, music_id, score)
         )
         self.__conn.commit()
 
-    def setPlayers(self, name, age, email):
+    def setPlayers(self, name, age, password):
         """Setter des joueurs."""
-        self.__cursor.execute("INSERT INTO players (name, age, email) VALUES (?, ?, ?)", (name, age, email))
+        self.__cursor.execute("INSERT OR REPLACE players (name, age, password) VALUES (?, ?, ?)", (name, age, password))
         self.__conn.commit()
 
     # ----------------------------------- Add ----------------------------------- #
@@ -240,19 +234,26 @@ class Database:
     def addMusic(self, title, artist, genre, release_date, difficulte):
         """Ajoute une musique a la base de donnees."""
         self.setMusic(title, artist, genre, release_date, difficulte)
-        print(f"Musique '{title}' ajoutee a la base de donnees.")
-
     
     def addScores(self, player_name, music_id, score):
         """Ajoute un score a la base de donnees."""
         self.setScores(player_name, music_id, score)
-        print(f"Score de '{player_name}' pour la musique ID {music_id} ajoute a la base de donnees.")
 
-
-    def addPlayers(self, name, age, email):
+    def addPlayers(self, name, age, password):
         """Ajoute un joueur a la base de donnees."""
-        self.setPlayers(name, age, email)
-        print(f"Joueur '{name}' ajoute a la base de donnees.")
+        self.setPlayers(name, age, password)
+        # Récupérer toutes les musiques existantes
+        self.__cursor.execute("SELECT id FROM music")
+        musics = self.__cursor.fetchall()
+
+        # Insérer un score de 0 pour chaque musique
+        for (music_id,) in musics:
+            self.__cursor.execute("""
+                INSERT OR IGNORE INTO scores (player_name, music_id, score)
+                VALUES (?, ?, 0)
+            """, (name, music_id))
+
+        self.__conn.commit()
 
     # ----------------------------------- Edit ----------------------------------- #
 
@@ -269,7 +270,6 @@ class Database:
         if difficulte:
             self.__cursor.execute("UPDATE music SET difficulte = ? WHERE id = ?", (difficulte, music_id))
         self.__conn.commit()
-        print(f"Musique avec ID {music_id} modifiee.")
 
     def editScores(self, score_id, player_name=None, score=None):
         """Modifie un score dans la base de donnees."""
@@ -278,18 +278,16 @@ class Database:
         if score:
             self.__cursor.execute("UPDATE scores SET score = ? WHERE id = ?", (score, score_id))
         self.__conn.commit()
-        print(f"Score avec ID {score_id} modifie.")
 
-    def editPlayers(self, player_id, name=None, age=None, email=None):
+    def editPlayers(self, player_id, name=None, age=None, password=None):
         """Modifie un joueur dans la base de donnees."""
         if name:
             self.__cursor.execute("UPDATE players SET name = ? WHERE id = ?", (name, player_id))
         if age:
             self.__cursor.execute("UPDATE players SET age = ? WHERE id = ?", (age, player_id))
-        if email:
-            self.__cursor.execute("UPDATE players SET email = ? WHERE id = ?", (email, player_id))
+        if password:
+            self.__cursor.execute("UPDATE players SET password = ? WHERE id = ?", (password, player_id))
         self.__conn.commit()
-        print(f"Joueur avec ID {player_id} modifie.")
 
     # ----------------------------------- Delete ----------------------------------- #
 
@@ -297,16 +295,13 @@ class Database:
         """Supprime une musique de la base de donnees."""
         self.__cursor.execute("DELETE FROM music WHERE id = ?", (music_id,))
         self.__conn.commit()
-        print(f"Musique avec ID {music_id} supprimee.")
 
     def deleteScores(self, score_id):
         """Supprime un score de la base de donnees."""
         self.__cursor.execute("DELETE FROM scores WHERE id = ?", (score_id,))
         self.__conn.commit()
-        print(f"Score avec ID {score_id} supprime.")
 
     def deletePlayers(self, player_id):
         """Supprime un joueur de la base de donnees."""
         self.__cursor.execute("DELETE FROM players WHERE id = ?", (player_id,))
         self.__conn.commit()
-        print(f"Joueur avec ID {player_id} supprime.")

@@ -95,9 +95,6 @@ class Game:
 if __name__ == "__main__":
     pygame.init()
     
-    # pygame.mixer.music.load("./assets/music/Musique_jeu.mp3")
-    # pygame.mixer.music.play(-1,0.0,8)
-
     Game = Game()
 
     while Game.getInterface().getPage() not in [PageState.FERMER]:

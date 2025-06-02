@@ -427,19 +427,15 @@ class SelectionView:
                 y_attendu -= i * 210
             y_attendu -= 514
             if y_first == 335 or y_first == y_attendu:
-                # print(f"✔️ La coordonnee y est bien egale a 335 ou {y_attendu}")
                 for pos, forme in selection.items():
                     if pos == tuple(self.getSelection()[0]):
                         if forme[3] < self.__windowManager.getAreaMusic().top:
                             scroll_up = True
-                            # print("❌ Le rectangle est en dehors de l'aire de musique")
             else:
-                # print(f"❌ La coordonnee y n'est pas egale a 335 ou {y_attendu}")
                 for pos, forme in selection.items():
                     if pos == tuple(self.getSelection()[0]):
                         if forme[3] < self.__windowManager.getAreaMusic().top:
                             scroll_up = True
-                            # print("❌ Le rectangle est en dehors de l'aire de musique")
 
             if scroll_up:
                 for pos, forme in selection.items():
@@ -464,19 +460,15 @@ class SelectionView:
                 y_attendu += i * 210
             y_attendu += 514
             if y_first == 335 or y_first == y_attendu:
-                # print("✔️ La coordonnee y est bien egale a 335")
                 for pos, forme in selection.items():
                     if pos == tuple(self.getSelection()[0]):
                         if forme[3] + forme[5] > self.__windowManager.getAreaMusic().top + self.__windowManager.getAreaMusic().height:
                             scroll_down = True
-                            # print("❌ Le rectangle est en dehors de l'aire de musique")
             else:
-                # print("❌ La coordonnee y n'est pas egale a 335 ou {y_attendu}")
                 for pos, forme in selection.items():
                     if pos == tuple(self.getSelection()[0]):
                         if forme[3] + forme[5] > self.__windowManager.getAreaMusic().top + self.__windowManager.getAreaMusic().height:
                             scroll_down = True
-                            # print("❌ Le rectangle est en dehors de l'aire de musique")
 
             if scroll_down:
                 for pos, forme in selection.items():

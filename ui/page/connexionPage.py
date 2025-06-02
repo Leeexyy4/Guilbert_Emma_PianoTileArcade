@@ -3,15 +3,6 @@ from ui.page.basePage import BasePage
 from ui.utils.inputBox import InputBox
 
 class ConnexionPage(BasePage):
-    def __init__(self, windowManager):
-        super().__init__(windowManager)
-        font = self._windowManager.getFontSmall()
-        color = self._windowManager.getColor()
-        self.input_username = InputBox(0, 0, 280, 50, font, color.getGris(), color.getViolet())
-        self.input_password = InputBox(0, 0, 280, 50, font, color.getGris(), color.getViolet(), is_password=True)
-        self.button_valider = pygame.Rect(0, 0, 280, 60)
-        self.erreur_connexion = False 
-
     def affichagePage(self):
         window = self._windowManager.getWindow()
         font = self._windowManager.getFontSmall()

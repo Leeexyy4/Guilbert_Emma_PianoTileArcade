@@ -21,6 +21,9 @@ class GameView:
 
     def getPlayWidth(self):
         return self.__play_width
+    
+    def getScore(self):
+        return self.__score
 
     def getPlayHeight(self):
         return self.__play_height
@@ -30,6 +33,9 @@ class GameView:
 
     def getCurrentTime(self):
         return self.__piano.getCurrentTime()
+
+    def setScore(self, score):
+        self.__score = score
     
     def checkHit(self, column):
         closest_note = None
@@ -47,12 +53,19 @@ class GameView:
         if closest_note:
             closest_note.setClicked(True)
             closest_note.setColor(self.getWindowManager().getColor().getRose())
-            print("Note validée !")
+            player = self.getWindowManager().getCurrentUser()
+            self.setScore(self.__score + 1)
+            player_name = player.getName()
+            new_score = self.__score
+
+            db = self.getWindowManager().getInterface().getGame().getDatabase()
+            music_id = db.getMusicFromTitle(self.getWindowManager().getMusicSelect())[0][0]
+            best_score = db.getBestScoreForUser(player_name, music_id)
+
+            if new_score > best_score:
+                db.setScores(player_name, music_id, new_score)
             return True
-
-        print("Raté !")
         return False
-
 
     def reset(self):
         self = GameView(self.getWindowManager())
@@ -83,6 +96,12 @@ class GameView:
         # Ligne de validation principale (déjà existante)
         pygame.draw.line(screen, (150, 100, 200, 100), (self.__padding_x, self.__line_y), (self.__screen_width - self.__padding_x, self.__line_y), 4)
 
+        # Affichage du score actuel en haut au centre
+        score_text = self.__windowManager.getFontTall().render(
+            f"Score : {self.__score}", True, self.__windowManager.getColor().getBlanc()
+        )
+        screen.blit(score_text, score_text.get_rect(center=(self.__screen_width // 2, 40)))
+
         pygame.display.flip()
 
     def update(self):
@@ -95,7 +114,6 @@ class GameView:
             note.updatePosition(current_time)
             if note.isMissed():
                 self.__game_over = True
-                print("Note manquée ! Game Over")
                 pygame.mixer.music.stop()
                 return
 
