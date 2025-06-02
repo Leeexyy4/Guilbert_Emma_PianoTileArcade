@@ -7,7 +7,7 @@ class BackgroundView:
     def affichageFondEcran(self, ImageFond):
         """
             La fonction affichageFondEcran permet d'affichage l'illustration de fond du jeu
-            :param ImageFond: L'image de fond à affichage (par défaut, None).
+            :param ImageFond: L'image de fond à affichage (par defaut, None).
         """
         screen_width = self.__windowManager.getScreenWidth()
         screen_height = self.__windowManager.getScreenHeight()

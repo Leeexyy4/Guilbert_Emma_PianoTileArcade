@@ -5,7 +5,6 @@ class Image:
     class Page:
         """La classe Page est une classe qui permet de recuperer l'image voulue grâce au getter."""
         PROFIL = pygame.image.load("./assets/img/page/ACCUEIL.png")
-        TRIER = pygame.image.load("./assets/img/page/ACCUEIL.png")
         FILTRER = pygame.image.load("./assets/img/page/ACCUEIL.png")
         AIDE = pygame.image.load("./assets/img/page/ACCUEIL.png")
         DETAIL = pygame.image.load("./assets/img/page/ACCUEIL.png")

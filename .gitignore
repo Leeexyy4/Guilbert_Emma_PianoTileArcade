@@ -1,4 +1,4 @@
-# Fichiers de base de données
+# Fichiers de base de donnees
 .venv/
 
 # Fichiers temporaires Python
@@ -6,11 +6,11 @@ __pycache__/
 */__pycache__/
 **/__pycache__/
 
-# Fichiers compilés Python
+# Fichiers compiles Python
 *.pyc
 *.pyo
 *.pyd
 
-# Éventuels fichiers de log ou temporaires
+# eventuels fichiers de log ou temporaires
 *.log
 *.tmp

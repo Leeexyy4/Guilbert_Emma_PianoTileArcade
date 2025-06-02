@@ -1,5 +1,3 @@
-# GUILBERT Emma
-
 import pygame, sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from core.pageState import PageState
@@ -16,7 +14,7 @@ class Game:
 # ----------------------------------- Getter ----------------------------------- #
 
     def getDatabase(self):
-        """Getter de la base de données."""
+        """Getter de la base de donnees."""
         return self.__database
 
     def getInterface(self): 
@@ -34,11 +32,16 @@ class Game:
             self.getInterface().affichagePageProfil()
         self.getLogic().actionPageProfil()
 
-    def PageTrier(self):
+    def PageConnexion(self):
         if (self.getInterface().getUpdate()):
-            self.getInterface().affichagePageTrier()
-        self.getLogic().actionPageTrier()
-    
+            self.getInterface().affichagePageConnexion()
+        self.getLogic().actionPageConnexion()
+
+    def PageInscription(self):
+        if (self.getInterface().getUpdate()):
+            self.getInterface().affichagePageConnexion()
+        self.getLogic().actionPageConnexion()
+
     def PageFiltrer(self):
         if (self.getInterface().getUpdate()):
             self.getInterface().affichagePageFiltrer()
@@ -92,17 +95,20 @@ class Game:
 if __name__ == "__main__":
     pygame.init()
     
-    pygame.mixer.music.load("./assets/music/Musique_jeu.mp3")
-    pygame.mixer.music.play(-1,0.0,8)
+    # pygame.mixer.music.load("./assets/music/Musique_jeu.mp3")
+    # pygame.mixer.music.play(-1,0.0,8)
 
     Game = Game()
 
-    while Game.getInterface().getPage() not in [PageState.QUITTER]:
+    while Game.getInterface().getPage() not in [PageState.FERMER]:
         if Game.getInterface().getPage() is PageState.PROFIL:
             Game.PageProfil()
 
-        elif Game.getInterface().getPage() is PageState.TRIER:
-            Game.PageTrier()
+        elif Game.getInterface().getPage() is PageState.CONNEXION:
+            Game.PageConnexion()
+
+        elif Game.getInterface().getPage() is PageState.INSCRIPTION:
+            Game.PageInscription()
 
         elif Game.getInterface().getPage() is PageState.FILTRER:
             Game.PageFiltrer()
@@ -134,5 +140,6 @@ if __name__ == "__main__":
         elif Game.getInterface().getPage() is PageState.FINPERDU:
             Game.PageFinPerdu() 
 
-        # Mettre à jour l'affichage
+        # Mettre a jour l'affichage
         pygame.display.update()
+
