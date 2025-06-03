@@ -9,20 +9,20 @@ class HelpPage(BasePage):
         color = self._windowManager.getColor()
         button_descriptions = {
             "joueur1": {
-                pygame.K_1: "Action 1",
-                pygame.K_2: "Action 2",
-                pygame.K_3: "Action 3",
-                pygame.K_4: "Action 4",
-                pygame.K_5: "Action 5",
-                pygame.K_6: "Valider",
+                pygame.K_r: "Piano colonne 1",
+                pygame.K_t: "Piano colonne 2",
+                pygame.K_y: "Piano colonne 3",
+                pygame.K_f: "Piano colonne 4",
+                pygame.K_g: "Aucune action",
+                pygame.K_h: "Valider",
             },
             "joueur2": {
-                pygame.K_KP1: "Action 1",
-                pygame.K_KP2: "Action 2",
-                pygame.K_KP3: "Action 3",
-                pygame.K_KP4: "Action 4",
-                pygame.K_KP5: "Action 5",
-                pygame.K_KP6: "Valider",
+                pygame.K_a: "Piano colonne 1",
+                pygame.K_z: "Piano colonne 2",
+                pygame.K_e: "Piano colonne 3",
+                pygame.K_q: "Piano colonne 4",
+                pygame.K_s: "Aucune action",
+                pygame.K_d: "Valider",
             }
         }
 
@@ -65,15 +65,15 @@ class HelpPage(BasePage):
                 pygame.draw.rect(screen, color.getViolet(), rect_button, 3)
 
                 # Pour les touches 1-4 : dessiner joystick direction
-                if key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_KP1, pygame.K_KP2, pygame.K_KP3, pygame.K_KP4]:
+                if key in [pygame.K_r, pygame.K_t, pygame.K_y, pygame.K_f]:
                     # Definir la direction selon touche
-                    if key in [pygame.K_1, pygame.K_KP1]:
+                    if key == [pygame.K_r]:
                         direction = "up"
-                    elif key in [pygame.K_2, pygame.K_KP2]:
+                    elif key == [pygame.K_t]:
                         direction = "down"
-                    elif key in [pygame.K_3, pygame.K_KP3]:
+                    elif key == [pygame.K_y]:
                         direction = "left"
-                    elif key in [pygame.K_4, pygame.K_KP4]:
+                    elif key == [pygame.K_f]:
                         direction = "right"
                     else:
                         direction = None

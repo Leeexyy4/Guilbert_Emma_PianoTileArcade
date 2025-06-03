@@ -5,18 +5,18 @@ class Button:
         self.__buttons = {
             # Premier joueur
             pygame.K_r: False,
-            pygame.K_2: False,
-            pygame.K_3: False,
-            pygame.K_4: False,
-            pygame.K_5: False,
-            pygame.K_6: False,  # Entrer
+            pygame.K_t: False,
+            pygame.K_y: False,
+            pygame.K_f: False,
+            pygame.K_g: False,
+            pygame.K_h: False,  # Entrer
             # Deuxieme joueur
-            pygame.K_KP1: False,
-            pygame.K_KP2: False,
-            pygame.K_KP3: False,
-            pygame.K_KP4: False,
-            pygame.K_KP5: False,
-            pygame.K_KP6: False,  # Entrer
+            pygame.K_a: False,
+            pygame.K_z: False,
+            pygame.K_e: False,
+            pygame.K_q: False,
+            pygame.K_z: False,
+            pygame.K_d: False,  # Entrer
         }
 
     def update(self, event):
@@ -24,26 +24,26 @@ class Button:
         if event.type != pygame.KEYDOWN:
             return None  # Ignore les événements non-clavier
 
-        if event.key in (pygame.K_UP, pygame.K_z):
+        if event.key in (pygame.K_UP, pygame.K_o):
             return (0, -1)
-        elif event.key in (pygame.K_DOWN, pygame.K_s):
+        elif event.key in (pygame.K_DOWN, pygame.K_l):
             return (0, 1)
-        elif event.key in (pygame.K_LEFT, pygame.K_q):
+        elif event.key in (pygame.K_LEFT, pygame.K_k):
             return (-1, 0)
-        elif event.key in (pygame.K_RIGHT, pygame.K_d):
+        elif event.key in (pygame.K_RIGHT, pygame.K_m):
             return (1, 0)
 
-        if event.key in (pygame.K_KP_6, pygame.K_6):
+        if event.key == pygame.K_h:
             return "enter"
-        if event.key in (pygame.K_KP_1, pygame.K_1):
+        if event.key == pygame.K_r:
             return 0
-        if event.key in (pygame.K_KP_2, pygame.K_2):
+        if event.key == pygame.K_t:
             return 1
-        if event.key in (pygame.K_KP_3, pygame.K_3):
+        if event.key == pygame.K_y:
             return 2
-        if event.key in (pygame.K_KP_4, pygame.K_4):
+        if event.key == pygame.K_f:
             return 3
-        if event.key in (pygame.K_KP_5, pygame.K_5):
+        if event.key == pygame.K_g:
             return 4
 
         return None
@@ -51,6 +51,6 @@ class Button:
     def getAll(self):
         """
         Retourne l'état de tous les boutons suivis sous forme de dictionnaire.
-        Exemple : {pygame.K_1: False, pygame.K_2: True, ...}
+        Exemple : {pygame.K_r: False, pygame.K_t: True, ...}
         """
         return self.__buttons.copy()
