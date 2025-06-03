@@ -39,8 +39,8 @@ class Game:
 
     def PageInscription(self):
         if (self.getInterface().getUpdate()):
-            self.getInterface().affichagePageConnexion()
-        self.getLogic().actionPageConnexion()
+            self.getInterface().affichagePageInscription()
+        self.getLogic().actionPageInscription()
 
     def PageFiltrer(self):
         if (self.getInterface().getUpdate()):

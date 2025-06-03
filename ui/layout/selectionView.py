@@ -90,10 +90,10 @@ class SelectionView:
             if tuple(position) == tuple(position_courante):
                 if params[0] == "rectangle":
                     _, x, y, width, height, color = params
-                    pygame.draw.rect(self.__windowManager.getWindow(), color, pygame.Rect(x, y, width, height), width=5)
+                    pygame.draw.rect(self.__windowManager.getWindow(), color, pygame.Rect(x, y, width, height), 5)
                 elif params[0] == "cercle":
                     _, x, y, radius, color = params
-                    pygame.draw.circle(self.__windowManager.getWindow(), color, (x, y), radius, width=5)
+                    pygame.draw.circle(self.__windowManager.getWindow(), color, (x, y), radius, 5)
 
     def create_PROFIL_selections(self):
         positions_valides = [
@@ -153,17 +153,34 @@ class SelectionView:
         return selections
     
     def create_INSCRIPTION_selections(self):
+        positions_valides = [
+            (0, 0),
+            (1, 0),
+            (2, 0),
+            (0, 1), 
+            (0, 2),
+            (0, 3),
+            (0, 4), 
+            (0, 5), 
+            (1, 5),
+            (2, 5),
+            (3, 5)
+        ]
+        
         selections = {}
 
-        selections[(0, 0)] = "Profil", "cercle", 100, 100, 75, self.__windowManager.getColor().getBlanc()
-        selections[(1, 0)] = "Retour", "rectangle", self.__windowManager.getScreenWidth() / 2 - 200, 80, 400, 60, self.__windowManager.getColor().getBlanc()
-        selections[(2, 0)] = "Aide", "cercle", self.__windowManager.getScreenWidth() - 120, 100, 40, self.__windowManager.getColor().getBlanc()
-        selections[(0, 1)] = "Nom d'utilisateur", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 - 100, 400, 50, self.__windowManager.getColor().getBlanc()
-        selections[(0, 2)] = "Mot de passe", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2, 400, 50, self.__windowManager.getColor().getBlanc()
-        selections[(0, 3)] = "Confirmer le mot de passe", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 + 100, 400, 50, self.__windowManager.getColor().getBlanc()
-        selections[(1, 3)] = "Valider", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 + 180, 400, 60, self.__windowManager.getColor().getBlanc()
-        selections[(2, 3)] = "Accueil", "rectangle", 0, self.__windowManager.getScreenHeight() - 150, self.__windowManager.getScreenWidth() / 4, 150, self.__windowManager.getColor().getBlanc()
-        selections[(3, 3)] = "Quitter", "rectangle", self.__windowManager.getScreenWidth() * 3 / 4, self.__windowManager.getScreenHeight() - 150, self.__windowManager.getScreenWidth() / 4, 150, self.__windowManager.getColor().getBlanc()
+        if ((0, 0), (1, 0), (2, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (1, 5), (2, 5), (3, 5) in positions_valides):
+            selections[(0, 0)] = "Profil", "cercle", 100, 100, 75, self.__windowManager.getColor().getBlanc()
+            selections[(1, 0)] = "Retour", "rectangle", self.__windowManager.getScreenWidth() / 2 - 200, 80, 400, 60, self.__windowManager.getColor().getBlanc()
+            selections[(2, 0)] = "Aide", "cercle", self.__windowManager.getScreenWidth() - 120, 100, 40, self.__windowManager.getColor().getBlanc()
+            selections[(0, 1)] = "Nom d'utilisateur", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 - 130, 400, 50, self.__windowManager.getColor().getBlanc()
+            selections[(0, 2)] = "Mot de passe", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 - 30, 400, 50, self.__windowManager.getColor().getBlanc()
+            selections[(0, 3)] = "Confirmer le mot de passe", "rectangle", self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 + 70, 400, 50, self.__windowManager.getColor().getBlanc()
+            selections[(0, 4)] = "Valider", "rectangle",  self.__windowManager.getScreenWidth() // 2 - 200, self.__windowManager.getScreenHeight() // 2 + 150, 400, 60, self.__windowManager.getColor().getBlanc()
+            selections[(0, 5)] = "Accueil", "rectangle", 0, self.__windowManager.getScreenHeight() - 150, self.__windowManager.getScreenWidth() / 4, 150, self.__windowManager.getColor().getBlanc()
+            selections[(1, 5)] = "Multijoueur", "rectangle", self.__windowManager.getScreenWidth() / 4, self.__windowManager.getScreenHeight() - 150, self.__windowManager.getScreenWidth() / 4, 150, self.__windowManager.getColor().getBlanc()
+            selections[(2, 5)] = "Statistique", "rectangle", self.__windowManager.getScreenWidth() / 2, self.__windowManager.getScreenHeight() - 150, self.__windowManager.getScreenWidth() / 4, 150, self.__windowManager.getColor().getBlanc()
+            selections[(3, 5)] = "Quitter", "rectangle", self.__windowManager.getScreenWidth() * 3 / 4, self.__windowManager.getScreenHeight() - 150, self.__windowManager.getScreenWidth() / 4, 150, self.__windowManager.getColor().getBlanc()
 
         return selections
 

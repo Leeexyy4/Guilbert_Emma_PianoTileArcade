@@ -20,5 +20,3 @@ class ProfilPage(BasePage):
         pygame.draw.rect(window, self._windowManager.getColor().getViolet(), rect_inscription)
         texte_inscription = font.render("S'inscrire", True, color)
         window.blit(texte_inscription, texte_inscription.get_rect(center=rect_inscription.center))
-
-

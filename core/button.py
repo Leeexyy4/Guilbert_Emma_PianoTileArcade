@@ -4,7 +4,7 @@ class Button:
     def __init__(self):
         self.__buttons = {
             # Premier joueur
-            pygame.K_1: False,
+            pygame.K_r: False,
             pygame.K_2: False,
             pygame.K_3: False,
             pygame.K_4: False,

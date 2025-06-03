@@ -5,12 +5,17 @@ import datetime
 class Database:
     def __init__(self, db_path="data/database.db"):
         self.__db_path = db_path
+        db_exists = os.path.exists(db_path)
+
         if os.path.dirname(db_path):
             os.makedirs(os.path.dirname(db_path), exist_ok=True)
-        self.__conn = sqlite3.connect(self.__db_path, check_same_thread=False)  # Permet acces multi-threads
-        self.__conn.execute('PRAGMA journal_mode=WAL;')  # Active mode WAL
+
+        self.__conn = sqlite3.connect(self.__db_path, check_same_thread=False)
+        self.__conn.execute('PRAGMA journal_mode=WAL;')
         self.__cursor = self.__conn.cursor()
-        self.initialize()
+
+        if not db_exists:
+            self.initialize()
 
     def create_tables(self):
         self.__cursor.execute("""
@@ -70,14 +75,14 @@ class Database:
             ('Emma', 'admin123')
         """)
 
-        # Ajout de scores pour des joueurs et musiques
-        self.__cursor.execute("""
-            INSERT OR IGNORE INTO scores (player_name, music_id, score) VALUES
-            ('Invité', 1, 0),
-            ('Invité', 2, 0),
-            ('Invité', 3, 0),
-            ('Invité', 4, 0)
-        """)
+        for music_id in [1, 2, 3, 4]:
+            self.__cursor.execute("""
+                SELECT 1 FROM scores WHERE player_name = 'Invité' AND music_id = ?
+            """, (music_id,))
+            if not self.__cursor.fetchone():
+                self.__cursor.execute("""
+                    INSERT INTO scores (player_name, music_id, score) VALUES (?, ?, ?)
+                """, ('Invité', music_id, 0))
 
         self.__conn.commit()
 
@@ -194,7 +199,7 @@ class Database:
             WHERE player_name = ? AND music_id = ?
         """, (player_name, music_id))
         row = self.__cursor.fetchone()
-        return row[0] if row else 0
+        return row[0] if row and row[0] is not None else 0
 
     def getBestScoreAllUsers(self, music_id):
         self.__cursor.execute("""
@@ -203,7 +208,7 @@ class Database:
             WHERE music_id = ?
         """, (music_id,))
         row = self.__cursor.fetchone()
-        return row[0] if row else 0
+        return row[0] if row and row[0] is not None else 0
 
 
     # ----------------------------------- Setter ----------------------------------- #

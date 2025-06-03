@@ -68,30 +68,40 @@ class Logic:
                 exit()
 
     def actionPageInscription(self):
+        # ✅ Ne continue que si la page courante est bien CONNEXION
         if self.getInterface().getPage() != PageState.INSCRIPTION:
             return
 
+        # ✅ Récupère la page Connexion
         page = self.getInterface().getWindowManager().getMenu().getPage()
         if page is None:
-            return
+            return  # Sécurité : évite crash si getPage() retourne None
 
         self.getInterface().setUpdate(False)
 
         for event in pygame.event.get():
-            if page.input_username.active or page.input_password.active or page.input_confirm.active:
-                page.handle_event(event)
+            # Toujours transmettre les événements à la page
+            page.handle_event(event)
 
+            username_active = page.input_username.active
+            password_active = page.input_password.active
+            password_confirm_active = page.input_confirmPassword.active
+
+            # ✅ Si un champ est actif, gérer les touches
+            if username_active or password_active or password_confirm_active:
                 if event.type == pygame.KEYDOWN and event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                    # ⬅️➡️⬆️⬇️ désactivent la saisie
                     page.input_username.active = False
                     page.input_password.active = False
-                    page.input_confirm.active = False
+                    page.input_confirmPassword.active = False
                     page.input_username.color = page.input_username.color_inactive
                     page.input_password.color = page.input_password.color_inactive
-                    page.input_confirm.color = page.input_confirm.color_inactive
+                    page.input_confirmPassword.color = page.input_confirmPassword.color_inactive
 
                 self.getInterface().setUpdate(True)
-                continue
+                continue  # ⛔ Ignore le reste (navigation)
 
+            # 🎮 Navigation clavier
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
@@ -104,43 +114,61 @@ class Logic:
                     elif current_item == "Valider":
                         username = page.input_username.get_text()
                         password = page.input_password.get_text()
-                        confirm = page.input_confirm.get_text()
+                        confirmPassword = page.input_confirmPassword.get_text()
 
                         db = self.getInterface().getGame().getDatabase()
                         users = db.getPlayers()
 
-                        if any(u[1] == username for u in users):
-                            page.erreur_inscription = "Nom déjà utilisé."
-                        elif password != confirm:
-                            page.erreur_inscription = "Les mots de passe ne correspondent pas."
+                        matched_user = next(
+                            (u for u in users if u[1] == username and u[2] == password), None
+                        )
+
+                        if matched_user and confirmPassword == password:
+                            page.erreur_inscription = False
+
+                            player_id, name, password = matched_user
+                            player_obj = Player(player_id, name, password)
+
+                            self.getInterface().getWindowManager().setCurrentUser(player_obj)
+                            self.getInterface().setPage(PageState.ACCUEIL)
                         else:
-                            db._Database__cursor.execute("INSERT OR IGNORE INTO players (name, password) VALUES (?, ?)", (username, password))
-                            db._Database__conn.commit()
-                            page.erreur_inscription = ""
-                            self.getInterface().setPage(PageState.CONNEXION)
+                            page.erreur_inscription = True
 
                         self.getInterface().setUpdate(True)
 
+                    elif current_item == "Profil":
+                        self.getInterface().setPage(PageState.PROFIL)
+                    elif current_item == "Accueil":
+                        self.getInterface().setPage(PageState.ACCUEIL)
                     elif current_item == "Nom d'utilisateur":
                         page.input_username.active = True
                         page.input_password.active = False
-                        page.input_confirm.active = False
-
+                        page.input_confirmPassword.active = False
+                        page.input_username.color = page.input_username.color_active
+                        page.input_password.color = page.input_password.color_inactive
+                        page.input_confirmPassword.color = page.input_password.color_inactive
                     elif current_item == "Mot de passe":
                         page.input_password.active = True
                         page.input_username.active = False
-                        page.input_confirm.active = False
-
+                        page.input_confirmPassword.active = False
+                        page.input_password.color = page.input_password.color_active
+                        page.input_username.color = page.input_username.color_inactive
+                        page.input_confirmPassword.color = page.input_confirmPassword.color_inactive
                     elif current_item == "Confirmer le mot de passe":
-                        page.input_confirm.active = True
-                        page.input_username.active = False
+                        page.input_confirmPassword.active = True
                         page.input_password.active = False
-
-                    elif current_item == "Accueil":
-                        self.getInterface().setPage(PageState.ACCUEIL)
-
+                        page.input_username.active = False
+                        page.input_confirmPassword.color = page.input_confirmPassword.color_active
+                        page.input_password.color = page.input_password.color_inactive
+                        page.input_username.color = page.input_username.color_inactive
+                    elif current_item == "Multijoueur":
+                        self.getInterface().setPage(PageState.MULTIJOUEUR)
+                    elif current_item == "Statistique":
+                        self.getInterface().setPage(PageState.STATISTIQUE)
                     elif current_item == "Quitter":
                         self.getInterface().setPage(PageState.QUITTER)
+
+                    self.getInterface().setUpdate(True)
 
                 elif isinstance(direction, tuple):
                     self.getInterface().getWindowManager().getSelection().updatePosition(direction)
@@ -149,8 +177,6 @@ class Logic:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
-
 
     def actionPageConnexion(self):
         # ✅ Ne continue que si la page courante est bien CONNEXION
@@ -165,24 +191,25 @@ class Logic:
         self.getInterface().setUpdate(False)
 
         for event in pygame.event.get():
+            # Toujours transmettre les événements à la page
+            page.handle_event(event)
+
             username_active = page.input_username.active
             password_active = page.input_password.active
 
-            # ✅ Si un champ est actif, gestion directe sans navigation
+            # ✅ Si un champ est actif, gérer les touches
             if username_active or password_active:
-                page.handle_event(event)
-
-                # ⌨️ Désactive édition si touches directionnelles pressées
                 if event.type == pygame.KEYDOWN and event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
+                    # ⬅️➡️⬆️⬇️ désactivent la saisie
                     page.input_username.active = False
                     page.input_password.active = False
                     page.input_username.color = page.input_username.color_inactive
                     page.input_password.color = page.input_password.color_inactive
 
                 self.getInterface().setUpdate(True)
-                continue  # ⛔ Ignore navigation
+                continue  # ⛔ Ignore le reste (navigation)
 
-            # 🎮 Gestion de la navigation
+            # 🎮 Navigation clavier
             direction = self.getButton().update(event)
             if direction:
                 if direction == "enter":
@@ -199,7 +226,9 @@ class Logic:
                         db = self.getInterface().getGame().getDatabase()
                         users = db.getPlayers()
 
-                        matched_user = next((u for u in users if u[1] == username and u[2] == password), None)
+                        matched_user = next(
+                            (u for u in users if u[1] == username and u[2] == password), None
+                        )
 
                         if matched_user:
                             page.erreur_connexion = False
@@ -211,6 +240,7 @@ class Logic:
                             self.getInterface().setPage(PageState.ACCUEIL)
                         else:
                             page.erreur_connexion = True
+
                         self.getInterface().setUpdate(True)
 
                     elif current_item == "Profil":
@@ -220,9 +250,13 @@ class Logic:
                     elif current_item == "Nom d'utilisateur":
                         page.input_username.active = True
                         page.input_password.active = False
+                        page.input_username.color = page.input_username.color_active
+                        page.input_password.color = page.input_password.color_inactive
                     elif current_item == "Mot de passe":
                         page.input_password.active = True
                         page.input_username.active = False
+                        page.input_password.color = page.input_password.color_active
+                        page.input_username.color = page.input_username.color_inactive
                     elif current_item == "Multijoueur":
                         self.getInterface().setPage(PageState.MULTIJOUEUR)
                     elif current_item == "Statistique":

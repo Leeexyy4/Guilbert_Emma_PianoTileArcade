@@ -17,6 +17,7 @@ class InputBox:
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.active = self.rect.collidepoint(event.pos)
             self.color = self.color_active if self.active else self.color_inactive
+
         if event.type == pygame.KEYDOWN and self.active:
             if event.key == pygame.K_RETURN:
                 return self.text
@@ -28,10 +29,6 @@ class InputBox:
 
     def get_display_text(self):
         return '●' * len(self.text) if self.is_password else self.text
-
-    def update(self):
-        width = max(200, self.txt_surface.get_width()+10)
-        self.rect.w = width
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)

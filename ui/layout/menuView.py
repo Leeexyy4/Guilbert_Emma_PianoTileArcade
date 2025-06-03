@@ -35,10 +35,20 @@ class MenuView:
         page = self.__windowManager.getInterface().getPage()
 
         if page != PageState.PLAY:
-            # Cercle image de profil
-            pygame.draw.circle(self.__windowManager.getWindow(), self.__windowManager.getColor().getViolet(), (100, 100), 80)
-            pygame.draw.circle(self.__windowManager.getWindow(), self.__windowManager.getColor().getRose(), (100, 100), 75)
-            pygame.draw.circle(self.__windowManager.getWindow(), self.__windowManager.getColor().getViolet(), (100, 100), 70)
+            center = (100, 100)
+            color = self.__windowManager.getColor()
+
+            # Cercles concentriques
+            pygame.draw.circle(window, color.getViolet(), center, 80)
+            pygame.draw.circle(window, color.getRose(), center, 75)
+            pygame.draw.circle(window, color.getViolet(), center, 70)
+
+            # Texte centré dans le cercle
+            font = self.__windowManager.getFontTall()
+            name = self.__windowManager.getCurrentUser().getName()
+            text_surface = font.render(name, True, color.getBlanc())
+            text_rect = text_surface.get_rect(center=center)
+            window.blit(text_surface, text_rect)
 
             # Cercle icône aide
             pygame.draw.circle(self.__windowManager.getWindow(), self.__windowManager.getColor().getViolet(), (self.__windowManager.getScreenWidth() - 120, 100), 45)

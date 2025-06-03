@@ -38,7 +38,7 @@ class HelpPage(BasePage):
         screen.blit(title_j2, (start_x_j2, start_y - 70))
 
         def draw_joystick_direction(surface, rect, direction, color_fg):
-            pygame.draw.rect(surface, color_fg, rect, width=3)
+            pygame.draw.rect(surface, color_fg, rect, 3)
             cx, cy = rect.center
             offset = 12
             # Dessin simple de fleche selon direction
@@ -62,7 +62,7 @@ class HelpPage(BasePage):
                 rect_button = pygame.Rect(start_x, y, 50, 50)
 
                 # fond carre contour violet
-                pygame.draw.rect(screen, color.getViolet(), rect_button, width=3)
+                pygame.draw.rect(screen, color.getViolet(), rect_button, 3)
 
                 # Pour les touches 1-4 : dessiner joystick direction
                 if key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_KP1, pygame.K_KP2, pygame.K_KP3, pygame.K_KP4]:
