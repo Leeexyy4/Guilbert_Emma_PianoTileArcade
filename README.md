@@ -2,7 +2,7 @@
 <!-- INTRODUCTION -->
 <br />
 <div align="center">
-  <img src="https://github.com/Leeexyy4/Guilbert_Emma_PianoTileArcade/blob/main/src/assets/img/readme/image.png" alt="Logo">
+  <img src="https://github.com/Leeexyy4/Guilbert_Emma_PianoTileArcade/blob/main/assets/img/readme/image.png" alt="Logo">
 
   <p align="center">
     Projet réalisé en 3ème année de BUT Informatique - 2024-2025     <br/>
